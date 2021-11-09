@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/app.js",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "poststart": "npm prune --production"
   },
   "private": true,
   "dependencies": {
