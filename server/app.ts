@@ -21,6 +21,7 @@ class Application {
     this.app.use(bodyParser.urlencoded({ extended: false }))
 
     this.app.use(express.static(path.join(__dirname, 'public')))
+    this.app.use(Application.requireHTTPS);
 
     const port = process.env.PORT || '3000'
     this.app.set('port', port);
@@ -37,8 +38,15 @@ class Application {
 
     this.app.get('*', (req, res) => {
       console.log('hit received!');
-      // res.sendFile(path.join(__dirname, 'public/index.html'))
+      res.sendFile(path.join(__dirname, 'public/index.html'))
     })
+  }
+
+  private static requireHTTPS(req: express.Request, res: express.Response, next: any) {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
   }
 }
 
