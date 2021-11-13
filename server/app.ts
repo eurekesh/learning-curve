@@ -8,7 +8,7 @@ import {Sockets} from "./sockets/Sockets";
 
 class Application {
   public app: express.Application;
-  // private sockets: Sockets | undefined;
+  private sockets = new Sockets;
 
   constructor() {
     this.app = express();
@@ -31,9 +31,10 @@ class Application {
     this.app.set('port', port);
 
     const server = http.createServer(this.app);
-    // const io = new Server(server);
-    //
-    // io.on('connection', this.sockets.registerRoomEvents);
+    const io = new Server(server);
+    this.sockets.initialize(io);
+
+    io.on('connection', this.sockets.registerRoomEvents);
 
     server.listen(port, () => console.log('Server active on port ' + port));
   }
