@@ -27,7 +27,7 @@ class Application {
     this.app.use(express.static(path.join(__dirname, 'public')))
     this.app.use(Application.requireHTTPS);
 
-    const port = process.env.PORT || '3000'
+    const port = process.env.PORT || '3030'
     this.app.set('port', port);
 
     const server = http.createServer(this.app);
