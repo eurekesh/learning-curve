@@ -1,10 +1,17 @@
-<p>home-page works!</p>
-<div class="w-50 mx-auto">
-  <div class="m5-auto">
-    <app-info-card [superCoolTitle]="'Super cool Title here'" [superCoolSubtitle]="'Super cool Subtitle'"></app-info-card>
+
+<div class="row justify-content-center">
+  <div class="col-md-4 w-25">
+    <app-info-card [title]="'Create a room!'" [formInstructions]="'Choose a unique room name'" [buttonText]="'Create!'"></app-info-card>
   </div>
-  <div class="mt-5">
-    <app-info-card></app-info-card>
+  <div class="col-md-8 w-25">
+    <app-info-card [title]="'Join a room!'" [formInstructions]="'Enter an existing room name'" [buttonText]="'Join!'"></app-info-card>
   </div>
 </div>
 
+
+<!-- https://stackoverflow.com/questions/22150006/align-two-divs-horizontally-side-by-side-center-to-the-page-using-bootstrap-css
+<div class="row">
+  <div class="col-md-4">First Div</div>
+  <div class="col-md-8">Second DIV </div>
+</div>
+-->

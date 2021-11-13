@@ -1,5 +1,12 @@
-<mat-card>
-  <mat-card-title>{{superCoolTitle}}</mat-card-title>
-  <mat-card-subtitle>{{superCoolSubtitle}}</mat-card-subtitle>
-  <mat-card-content>MMMMM so tasty AND juicy</mat-card-content>
+<mat-card class="example-card">
+  <mat-card-title>{{title}}</mat-card-title>
+  <mat-card-content>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>{{formInstructions}}</mat-label>
+      <textarea matInput placeholder="Ex. ROOOOOM123321"></textarea>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button>{{buttonText}}</button>
+  </mat-card-actions>
 </mat-card>

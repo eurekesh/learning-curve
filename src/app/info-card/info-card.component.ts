@@ -7,8 +7,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class InfoCardComponent implements OnInit {
 
-  @Input() superCoolTitle = "YEETUS";
-  @Input() superCoolSubtitle = "DEFEATUS";
+  @Input() title: String = "YEETUS";
+  @Input() subtitle: String = "yuh";
+  @Input() formInstructions: String = "YEEEEEEEE";
+  @Input() buttonText: String = "I'm a silly willy butty wutton"
 
   constructor() { }
 
