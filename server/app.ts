@@ -2,9 +2,13 @@ import * as express from 'express';
 import * as path from 'path';
 import * as http from 'http';
 import * as bodyParser from 'body-parser';
+import * as socket from 'socket.io'
+import {Server} from "socket.io";
+import {Sockets} from "./sockets/Sockets";
 
 class Application {
   public app: express.Application;
+  // private sockets: Sockets | undefined;
 
   constructor() {
     this.app = express();
@@ -27,6 +31,9 @@ class Application {
     this.app.set('port', port);
 
     const server = http.createServer(this.app);
+    // const io = new Server(server);
+    //
+    // io.on('connection', this.sockets.registerRoomEvents);
 
     server.listen(port, () => console.log('Server active on port ' + port));
   }
