@@ -25,13 +25,6 @@ export class Sockets {
       // @ts-ignore
     });
 
-    if (this.io) {
-      this.io.on('room:join', this.joinEvent)
-      this.io.on('connected', (data) => {
-        console.log(' connected');
-        socket.emit('confirm', 'hello client' + socket.id);
-      });
-    }
   }
 
   public isInitialized(): boolean {
