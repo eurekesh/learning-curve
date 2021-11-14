@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/app.js",
-    "build": "ng build --configuration=production && gulp backend",
+    "build": "ng build --configuration=production && gulp build-backend",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

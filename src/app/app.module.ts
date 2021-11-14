@@ -16,7 +16,7 @@ import {SocketIoModule} from "ngx-socket-io";
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    SocketIoModule.forRoot()
+    SocketIoModule.forRoot({options: {}, url: ""})
   ],
   providers: [],
   bootstrap: [AppComponent]

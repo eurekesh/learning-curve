@@ -32,6 +32,7 @@ class Application {
 
     const server = http.createServer(this.app);
     const io = new Server(server);
+    console.log(io);
     this.sockets.initialize(io);
 
     io.on('connection', this.sockets.registerRoomEvents);

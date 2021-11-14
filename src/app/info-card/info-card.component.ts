@@ -11,6 +11,7 @@ export class InfoCardComponent implements OnInit {
   @Input() subtitle: String = "yuh";
   @Input() formInstructions: String = "YEEEEEEEE";
   @Input() buttonText: String = "I'm a silly willy butty wutton"
+  @Input() showTextField = false;
 
   constructor() { }
 

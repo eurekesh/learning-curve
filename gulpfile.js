@@ -5,10 +5,18 @@ var gulp = require('gulp'),
 
 var projConfig = ts.createProject('server/tsconfig.json')
 
-gulp.task('backend', () => {
+gulp.task('build-backend', () => {
   return gulp.src('server/**/*.ts')
     .pipe(projConfig())
     .pipe(gulp.dest('dist/'))
+})
+
+gulp.task('build-frontend', (cb) => {
+  exec('ng build --output-path=dist/public --deleteOutputPath=false', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  })
 })
 
 gulp.task('frontend', (cb) => {
@@ -41,7 +49,7 @@ gulp.task('hot-reload-backend', (done) => {
 //   })
 // })
 
-gulp.task('default', (gulp.series('backend', gulp.parallel('frontend', 'hot-reload-backend', 'hot-reload-server'))), done => {
+gulp.task('default', (gulp.series('build-backend', gulp.parallel('frontend', 'hot-reload-backend', 'hot-reload-server'))), done => {
   done();
 })
 
