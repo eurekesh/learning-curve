@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {RoomServiceService} from "../services/room-service.service";
+import {Card} from "../interfaces/card";
 
 @Component({
   selector: 'app-playground',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
+  localCard: Card[];
 
-  constructor() { }
+  constructor(readonly rs: RoomServiceService) {
+    this.localCard = rs.getCards();
+  }
 
   ngOnInit(): void {
+
   }
 
 }

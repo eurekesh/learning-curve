@@ -10,6 +10,9 @@ import { PlaygroundComponent } from './playground.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    PlaygroundComponent
   ]
 })
 export class PlaygroundModule { }

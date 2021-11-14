@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout.component';
 import {TopNavModule} from "../top-nav/top-nav.module";
 import {HomePageModule} from "../home-page/home-page.module";
 import {AppRoutingModule} from "../app-routing.module";
+import {PlaygroundModule} from "../playground/playground.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {AppRoutingModule} from "../app-routing.module";
     CommonModule,
     TopNavModule,
     HomePageModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PlaygroundModule
   ]
 })
 export class LayoutModule { }

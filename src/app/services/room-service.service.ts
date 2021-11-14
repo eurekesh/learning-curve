@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Socket} from "ngx-socket-io";
 import {map, tap} from "rxjs";
+import {Card} from "../interfaces/card";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,17 @@ export class RoomServiceService {
       .pipe(tap(data => console.log(data)))
       .subscribe();
   }
+
+  getCards(): Card[] {
+    const c: Card = {
+      title: "dummy title",
+      subTitle: "dummy sub title",
+      cardType: 'Question',
+      content: "dummy"
+    }
+    return [c,c,c,c,c,c];
+  }
+
+
 
 }
