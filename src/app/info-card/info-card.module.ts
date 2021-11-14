@@ -4,6 +4,7 @@ import { InfoCardComponent } from './info-card.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
+import {RouterModule} from "@angular/router"
 
 
 
@@ -18,6 +19,7 @@ import {MatInputModule} from "@angular/material/input";
         CommonModule,
         MatCardModule,
         MatButtonModule,
+        RouterModule,
         MatInputModule
     ]
 })
