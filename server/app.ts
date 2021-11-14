@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as http from 'http';
 import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
 import * as socket from 'socket.io'
 import {Server} from "socket.io";
 import {Sockets} from "./sockets/Sockets";
@@ -26,6 +27,7 @@ class Application {
 
     this.app.use(express.static(path.join(__dirname, 'public')))
     this.app.use(Application.requireHTTPS);
+    this.app.use(compression());
 
     const port = process.env.PORT || '3030'
     this.app.set('port', port);

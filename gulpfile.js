@@ -38,7 +38,7 @@ gulp.task('hot-reload-server', (done) => {
 })
 
 gulp.task('hot-reload-backend', (done) => {
-  gulp.watch('server/**/*.ts', gulp.series(['backend']));
+  gulp.watch('server/**/*.ts', gulp.series(['build-backend']));
 });
 
 // gulp.task('browser-sync', () => {
