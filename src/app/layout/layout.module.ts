@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout.component';
 import {TopNavModule} from "../top-nav/top-nav.module";
 import {HomePageModule} from "../home-page/home-page.module";
-
+import {AppRoutingModule} from "../app-routing.module";
 
 
 @NgModule({
@@ -17,6 +17,7 @@ import {HomePageModule} from "../home-page/home-page.module";
     CommonModule,
     TopNavModule,
     HomePageModule,
+    AppRoutingModule
   ]
 })
 export class LayoutModule { }
