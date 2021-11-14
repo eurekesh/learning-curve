@@ -11,8 +11,7 @@ import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PlaygroundComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
