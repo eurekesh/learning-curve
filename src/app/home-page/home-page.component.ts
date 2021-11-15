@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-home-page',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    this.dialog.open(DialogComponent, dialogConfig);
+  }
 
   ngOnInit(): void {
   }
 
 }
+
+@Component({
+  selector: 'home-page-dialog',
+  templateUrl: './home-page-dialog.component.html',
+})
+export class DialogComponent {}

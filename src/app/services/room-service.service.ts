@@ -26,7 +26,7 @@ export class RoomServiceService {
 
   getCards(): Card[] {
     const c: Card = {
-      title: "dummy title",
+      title: "dummy thicc ",
       subTitle: "dummy sub title",
       cardType: 'Question',
       content: "dummy"

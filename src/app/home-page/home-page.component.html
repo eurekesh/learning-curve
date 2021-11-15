@@ -1,17 +1,25 @@
 
 <div class="row justify-content-center">
   <div class="col-md-4 w-25">
-    <app-info-card [title]="'Create a room!'" [formInstructions]="'Choose a unique room name'" [buttonText]="'Create!'"></app-info-card>
+    <mat-card class="example-card floating-card">
+      <mat-card-title>Create a room</mat-card-title>
+      <mat-card-actions>
+        <button mat-raised-button routerLink="/playground">Create!</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
   <div class="col-md-8 w-25">
-    <app-info-card [title]="'Join a room!'" [formInstructions]="'Enter an existing room name'" [buttonText]="'Join!'" [showTextField]="true"></app-info-card>
-  </div>
+    <mat-card class="example-card floating-card">
+      <mat-card-title>Join a room</mat-card-title>
+      <mat-card-actions>
+        <button mat-raised-button (click)="openDialog()">Join!</button>
+      </mat-card-actions>
+    </mat-card>  </div>
 </div>
 
 
-<!-- https://stackoverflow.com/questions/22150006/align-two-divs-horizontally-side-by-side-center-to-the-page-using-bootstrap-css
-<div class="row">
-  <div class="col-md-4">First Div</div>
-  <div class="col-md-8">Second DIV </div>
-</div>
--->
+
+
+
+
+
