@@ -34,6 +34,4 @@ export class RoomServiceService {
     return [c,c,c,c,c,c];
   }
 
-
-
 }

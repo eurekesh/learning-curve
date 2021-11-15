@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaygroundComponent } from './playground.component';
+import {MatSliderModule} from "@angular/material/slider";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -9,7 +11,9 @@ import { PlaygroundComponent } from './playground.component';
     PlaygroundComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSliderModule,
+    MatCardModule
   ],
   exports: [
     PlaygroundComponent
