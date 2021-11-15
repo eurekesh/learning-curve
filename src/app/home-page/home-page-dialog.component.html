@@ -1,15 +1,9 @@
-<h1 mat-dialog-title>Favorite Animal</h1>
-<div mat-dialog-content>
-  My favorite animal is:
-  <ul>
-    <li>
-      <span>&#10003;</span> Panda
-    </li>
-    <li>
-      <span>&#10003;</span> Unicorn
-    </li>
-    <li>
-      <span>&#10003;</span> Lion
-    </li>
-  </ul>
+<h1 mat-dialog-title>Enter a room code:</h1>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <input matInput placeholder="Ex. AIUGFH">
+  </mat-form-field>
+</form>
+<div mat-dialog-actions class="justify-content-center">
+  <button mat-raised-button mat-dialog-close routerLink="/playground">Go!</button>
 </div>

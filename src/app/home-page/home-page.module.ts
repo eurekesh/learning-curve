@@ -5,6 +5,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterModule} from "@angular/router";
+import {MatInputModule} from "@angular/material/input";
 
 
 
@@ -21,7 +22,8 @@ import {RouterModule} from "@angular/router";
     MatDialogModule,
     MatCardModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatInputModule
   ]
 })
 export class HomePageModule { }
