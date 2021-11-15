@@ -4,7 +4,7 @@ import { TopNavComponent } from './top-nav.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {SocketIoModule} from "ngx-socket-io";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -20,7 +20,7 @@ import {SocketIoModule} from "ngx-socket-io";
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    SocketIoModule
+    RouterModule
   ]
 })
 export class TopNavModule { }
