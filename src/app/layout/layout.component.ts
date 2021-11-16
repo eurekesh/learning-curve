@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RoomServiceService} from "../services/room-service.service";
+import {RoomServiceService} from "../shared/services/room-service.service";
 
 @Component({
   selector: 'app-layout',

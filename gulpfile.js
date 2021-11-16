@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
   ts = require('gulp-typescript'),
-  exec = require('child_process').exec,
+  spawn = require('cross-spawn'),
   nodemon = require('gulp-nodemon');
 
 var projConfig = ts.createProject('server/tsconfig.json')
@@ -12,19 +12,11 @@ gulp.task('build-backend', () => {
 })
 
 gulp.task('build-frontend', (cb) => {
-  exec('ng build --output-path=dist/public --deleteOutputPath=false', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  })
+  spawn('ng', ['build', '--output-path=dist/public', '--deleteOutputPath=false'], {stdio: 'inherit'});
 })
 
 gulp.task('frontend', (cb) => {
-  exec('ng build --output-path=dist/public --watch --deleteOutputPath=false', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  })
+  spawn('ng', ['build', '--output-path=dist/public', '--deleteOutputPath=false', '--watch', '--verbose', '--optimization=false'], {stdio: 'inherit'});
 })
 
 gulp.task('hot-reload-server', (done) => {
@@ -40,14 +32,6 @@ gulp.task('hot-reload-server', (done) => {
 gulp.task('hot-reload-backend', (done) => {
   gulp.watch('server/**/*.ts', gulp.series(['build-backend']));
 });
-
-// gulp.task('browser-sync', () => {
-//   browserSync.init({
-//     server: {
-//       baseDir: './'
-//     }
-//   })
-// })
 
 gulp.task('default', (gulp.series('build-backend', gulp.parallel('frontend', 'hot-reload-backend', 'hot-reload-server'))), done => {
   done();

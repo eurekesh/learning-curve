@@ -3,9 +3,9 @@ import * as path from 'path';
 import * as http from 'http';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
-import * as socket from 'socket.io'
 import {Server} from "socket.io";
 import {Sockets} from "./sockets/Sockets";
+import {instrument} from "@socket.io/admin-ui";
 
 class Application {
   public app: express.Application;
@@ -21,9 +21,16 @@ class Application {
     return new Application;
   }
 
+  private static requireHTTPS(req: express.Request, res: express.Response, next: any) {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+  }
+
   private loadConfiguration(): void {
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }))
+    this.app.use(bodyParser.urlencoded({extended: false}))
 
     this.app.use(express.static(path.join(__dirname, 'public')))
     this.app.use(Application.requireHTTPS);
@@ -32,11 +39,19 @@ class Application {
     const port = process.env.PORT || '3030'
     this.app.set('port', port);
 
-    const server = http.createServer(this.app);
-    const io = new Server(server);
+    const server = http.createServer(this.app, );
+    const io = new Server(server, {
+      cors: {origin: ["https://admin.socket.io"], credentials: true}
+    });
     console.log(io);
     this.sockets.initialize(io);
-
+    instrument(io, {
+      auth: {
+        type: 'basic',
+        username: 'admin',
+        password: process.env.SOCKETIOPW || '$2a$12$KyjK2vZcxo1tfD5NvuIA.ulU2hO.jUYMNE6/kftqyftC6/X5J3ERW'
+      }
+    })
     io.on('connection', this.sockets.registerRoomEvents);
 
     server.listen(port, () => console.log('Server active on port ' + port));
@@ -51,13 +66,6 @@ class Application {
       console.log('hit received!');
       res.sendFile(path.join(__dirname, 'public/index.html'))
     })
-  }
-
-  private static requireHTTPS(req: express.Request, res: express.Response, next: any) {
-    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
-      return res.redirect('https://' + req.get('host') + req.url);
-    }
-    next();
   }
 }
 
