@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {RoomServiceService} from "../services/room-service.service";
-import {ICard} from "../interfaces/card";
 import {MatSliderChange} from "@angular/material/slider";
 import {BehaviorSubject} from 'rxjs';
+import {ICard} from "../shared/interfaces/card";
+import {RoomServiceService} from "../shared/services/room-service.service";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)
 // https://www.tektutorialshub.com/angular/create-observable-from-event-using-fromevent-in-angular/ <-- for making DOM element observable
 
@@ -13,6 +13,7 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class PlaygroundComponent implements OnInit {
   localCard: ICard[];
+
 
   private slideSubject = new BehaviorSubject(0);
   readonly slideValue$ = this.slideSubject.asObservable();

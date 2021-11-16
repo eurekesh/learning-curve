@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TopNavComponent } from './top-nav.component';
+import {TopNavComponent} from './top-nav.component';
 
 describe('TopNavComponent', () => {
   let component: TopNavComponent;

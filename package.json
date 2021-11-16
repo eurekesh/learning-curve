@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node dist/app.js",
+    "start": "node dist/server/app.js",
     "build": "ng build --configuration=production && gulp build-backend",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

@@ -8,7 +8,7 @@ var projConfig = ts.createProject('server/tsconfig.json')
 gulp.task('build-backend', () => {
   return gulp.src('server/**/*.ts')
     .pipe(projConfig())
-    .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest('dist/server/'))
 })
 
 gulp.task('build-frontend', (cb) => {
@@ -21,7 +21,7 @@ gulp.task('frontend', (cb) => {
 
 gulp.task('hot-reload-server', (done) => {
   nodemon({
-    script: 'dist/app.js',
+    script: 'dist/server/app.js',
     ignore: ['gulpfile.js', 'public/'],
     env: { 'NODE_ENV': 'development'},
     done: done

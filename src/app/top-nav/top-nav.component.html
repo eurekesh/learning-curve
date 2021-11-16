@@ -1,7 +1,8 @@
 <p>
   <mat-toolbar>
-    <button mat-icon-button aria-label="Menu icon" routerLink="/">
+    <button mat-icon-button aria-label="Menu icon" routerLink="/" (click)="rs.resetRoomState()">
       <mat-icon>home</mat-icon>
     </button>
+    <span *ngIf="(rs.roomState | async)?.roomId !== '-2'">You {{(rs.roomState | async)?.isHost ? 'are' : 'are not'}} the host in room {{(rs.roomState | async)?.roomId}}</span>
   </mat-toolbar>
 </p>

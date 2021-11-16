@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RoomServiceService} from "../shared/services/room-service.service";
 
 @Component({
   selector: 'app-top-nav',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(readonly rs: RoomServiceService) {
+
+  }
 
   ngOnInit(): void {
   }

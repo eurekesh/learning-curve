@@ -4,12 +4,11 @@ import * as http from 'http';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import {Server} from "socket.io";
-import {Sockets} from "./sockets/Sockets";
-import {instrument} from "@socket.io/admin-ui";
+import {Sockets} from "./sockets/sockets";
 
 class Application {
   public app: express.Application;
-  private sockets = new Sockets;
+  private sockets = new Sockets();
 
   constructor() {
     this.app = express();
@@ -32,27 +31,29 @@ class Application {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({extended: false}))
 
-    this.app.use(express.static(path.join(__dirname, 'public')))
+    this.app.use(express.static(path.join(__dirname, '../public')))
     this.app.use(Application.requireHTTPS);
     this.app.use(compression());
 
     const port = process.env.PORT || '3030'
     this.app.set('port', port);
 
-    const server = http.createServer(this.app, );
-    const io = new Server(server, {
-      cors: {origin: ["https://admin.socket.io"], credentials: true}
-    });
-    console.log(io);
+    const server = http.createServer(this.app);
+    const io = new Server(server);
+    // console.log(io);
     this.sockets.initialize(io);
-    instrument(io, {
-      auth: {
-        type: 'basic',
-        username: 'admin',
-        password: process.env.SOCKETIOPW || '$2a$12$KyjK2vZcxo1tfD5NvuIA.ulU2hO.jUYMNE6/kftqyftC6/X5J3ERW'
-      }
-    })
-    io.on('connection', this.sockets.registerRoomEvents);
+    // instrument(io, {
+    //   auth: {
+    //     type: 'basic',
+    //     username: 'admin',
+    //     password: process.env.SOCKETIOPW || '$2a$12$KyjK2vZcxo1tfD5NvuIA.ulU2hO.jUYMNE6/kftqyftC6/X5J3ERW'
+    //   }
+    // })
+    io.on('connection', this.sockets.registerRoomEvents.bind(this.sockets)); // context binding, took way too long to figure this out
+
+    // debugging
+    io.of("/").adapter.on("create-room", (room) => {  console.log(`room ${room} was created`);});
+    io.of("/").adapter.on("join-room", (room, id) => {  console.log(`socket ${id} has joined room ${room}`);});
 
     server.listen(port, () => console.log('Server active on port ' + port));
   }
@@ -64,7 +65,7 @@ class Application {
 
     this.app.get('*', (req, res) => {
       console.log('hit received!');
-      res.sendFile(path.join(__dirname, 'public/index.html'))
+      res.sendFile(path.join(__dirname, '../public/index.html'))
     })
   }
 }
