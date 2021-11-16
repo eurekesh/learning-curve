@@ -1,4 +1,4 @@
-export interface Card {
+export interface ICard {
   title: string;
   subTitle: string;
   cardType: 'Question' | 'Poll' | 'Comment';

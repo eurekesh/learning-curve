@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Socket} from "ngx-socket-io";
-import {map, tap} from "rxjs";
-import {Card} from "../interfaces/card";
+import {debounceTime, Observable, tap} from "rxjs";
+import {ICard} from "../interfaces/card";
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +24,26 @@ export class RoomServiceService {
       .subscribe();
   }
 
-  getCards(): Card[] {
-    const c: Card = {
+  getCards(): ICard[] {
+    const c: ICard = {
       title: "dummy thicc ",
       subTitle: "dummy sub title",
       cardType: 'Question',
       content: "dummy"
     }
     return [c,c,c,c,c,c];
+  }
+
+  setSliderObservable(inputObs$: Observable<number>): void {
+    inputObs$
+      .pipe(
+        debounceTime(500),
+        tap(x => {
+          this.socket.emit('slider update', x);
+          console.log(x);
+        })
+      )
+      .subscribe();
   }
 
 }
