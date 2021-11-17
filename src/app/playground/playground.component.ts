@@ -33,10 +33,7 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
-  openAddCardDialog() {
-    const dialogConfig = new MatDialogConfig();
-    this.dialog.open(AddCardDialogComponent, dialogConfig);
-  }
+
 
   addCard(card: ICard){
     console.log("In playground.addcard")

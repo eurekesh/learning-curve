@@ -12,7 +12,8 @@ import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
-    TopNavComponent
+    TopNavComponent,
+    AddCardDialogComponent
   ],
   exports: [
     TopNavComponent
@@ -22,7 +23,10 @@ import {MatInputModule} from "@angular/material/input";
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule,
+    FormsModule,
+    MatInputModule
   ]
 })
 export class TopNavModule { }
