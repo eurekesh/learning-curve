@@ -1,8 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatSliderChange} from "@angular/material/slider";
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, filter, take, tap} from 'rxjs';
 import {ICard} from "../shared/interfaces/card";
 import {RoomServiceService} from "../shared/services/room-service.service";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
+import {DialogComponent} from "../home-page/home-page.component";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ConnectionState} from "../shared/enums/connection-state";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)
 // https://www.tektutorialshub.com/angular/create-observable-from-event-using-fromevent-in-angular/ <-- for making DOM element observable
 
@@ -12,14 +17,13 @@ import {RoomServiceService} from "../shared/services/room-service.service";
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-  localCard: ICard[];
-
+  localCards: ICard[];
 
   private slideSubject = new BehaviorSubject(0);
   readonly slideValue$ = this.slideSubject.asObservable();
 
-  constructor(readonly rs: RoomServiceService) {
-    this.localCard = rs.getCards();
+  constructor(readonly rs: RoomServiceService, public dialog: MatDialog) {
+    this.localCards = rs.getCards();
   }
 
   ngOnInit(): void {
@@ -33,5 +37,28 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
+  openAddCardDialog() {
+    const dialogConfig = new MatDialogConfig();
+    this.dialog.open(AddCardDialogComponent, dialogConfig);
+  }
+
+  addCard(card: ICard){
+    this.localCards.push()
+  }
+}
+
+@Component({
+  selector: 'add-card-dialog',
+  templateUrl: './playground-add-card-dialog.html',
+})
+export class AddCardDialogComponent {
+  constructor() {}
+
+  //https://angular.io/guide/inputs-outputs
+  @Output() newCardTitleEvent = new EventEmitter<string>();
+
+  addCard(title: String){
+    console.log(title)
+  }
 }
 

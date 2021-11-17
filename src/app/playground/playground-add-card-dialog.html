@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Give your card a title</h1>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <input matInput #title>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions class="justify-content-center">
+<!--  https://angular.io/guide/inputs-outputs -->
+  <button mat-raised-button (click)="addCard(title.value)">Add!</button>
+</div>
