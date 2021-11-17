@@ -1,13 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatSliderChange} from "@angular/material/slider";
-import {BehaviorSubject, filter, take, tap} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {ICard} from "../shared/interfaces/card";
 import {RoomServiceService} from "../shared/services/room-service.service";
-import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {DialogComponent} from "../home-page/home-page.component";
-import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ConnectionState} from "../shared/enums/connection-state";
+import {MatDialog} from "@angular/material/dialog";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)
 // https://www.tektutorialshub.com/angular/create-observable-from-event-using-fromevent-in-angular/ <-- for making DOM element observable
 
@@ -45,30 +41,6 @@ export class PlaygroundComponent implements OnInit {
   addCard(card: ICard){
     console.log("In playground.addcard")
     this.localCards.push(card)
-  }
-}
-
-@Component({
-  selector: 'add-card-dialog',
-  templateUrl: './playground-add-card-dialog.html',
-})
-export class AddCardDialogComponent {
-  //constructor(public playground: PlaygroundComponent) {} // has nullinjector error
-  constructor() {}
-
-  //https://angular.io/guide/inputs-outputs
-  @Output() newCardTitleEvent = new EventEmitter<string>();
-
-  addCard(inputTitle: string){
-     let c: ICard = {
-       title: inputTitle,
-       subTitle: '',
-       cardType: 'Question',
-       content: ''
-     };
-
-    //this.playground.addCard(c);
-    console.log(inputTitle)
   }
 }
 
