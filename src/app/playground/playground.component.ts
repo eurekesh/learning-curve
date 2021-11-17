@@ -43,7 +43,8 @@ export class PlaygroundComponent implements OnInit {
   }
 
   addCard(card: ICard){
-    this.localCards.push()
+    console.log("In playground.addcard")
+    this.localCards.push(card)
   }
 }
 
@@ -52,13 +53,22 @@ export class PlaygroundComponent implements OnInit {
   templateUrl: './playground-add-card-dialog.html',
 })
 export class AddCardDialogComponent {
+  //constructor(public playground: PlaygroundComponent) {} // has nullinjector error
   constructor() {}
 
   //https://angular.io/guide/inputs-outputs
   @Output() newCardTitleEvent = new EventEmitter<string>();
 
-  addCard(title: String){
-    console.log(title)
+  addCard(inputTitle: string){
+     let c: ICard = {
+       title: inputTitle,
+       subTitle: '',
+       cardType: 'Question',
+       content: ''
+     };
+
+    //this.playground.addCard(c);
+    console.log(inputTitle)
   }
 }
 
