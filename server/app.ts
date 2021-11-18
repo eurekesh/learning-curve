@@ -29,9 +29,10 @@ class Application {
 
   private loadConfiguration(): void {
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({extended: false}))
+    this.app.use(bodyParser.urlencoded({extended: false}));
 
-    this.app.use(express.static(path.join(__dirname, '../public')))
+    this.app.use(express.static(path.join(__dirname, '../public')));
+
     this.app.use(Application.requireHTTPS);
     this.app.use(compression());
 
