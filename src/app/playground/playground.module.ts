@@ -3,7 +3,9 @@ import {CommonModule} from '@angular/common';
 import {PlaygroundComponent} from './playground.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatCardModule} from "@angular/material/card";
-
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -12,7 +14,10 @@ import {MatCardModule} from "@angular/material/card";
   imports: [
     CommonModule,
     MatSliderModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule
   ],
   exports: [
     PlaygroundComponent

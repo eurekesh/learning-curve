@@ -3,6 +3,7 @@ import {MatSliderChange} from "@angular/material/slider";
 import {BehaviorSubject} from 'rxjs';
 import {ICard} from "../shared/interfaces/card";
 import {RoomServiceService} from "../shared/services/room-service.service";
+import {MatDialog} from "@angular/material/dialog";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)
 // https://www.tektutorialshub.com/angular/create-observable-from-event-using-fromevent-in-angular/ <-- for making DOM element observable
 
@@ -12,14 +13,13 @@ import {RoomServiceService} from "../shared/services/room-service.service";
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-  localCard: ICard[];
-
+  localCards: ICard[];
 
   private slideSubject = new BehaviorSubject(0);
   readonly slideValue$ = this.slideSubject.asObservable();
 
-  constructor(readonly rs: RoomServiceService) {
-    this.localCard = rs.getCards();
+  constructor(readonly rs: RoomServiceService, public dialog: MatDialog) {
+    this.localCards = rs.getCards();
   }
 
   ngOnInit(): void {
@@ -33,5 +33,11 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
+
+
+  addCard(card: ICard){
+    console.log("In playground.addcard")
+    this.localCards.push(card)
+  }
 }
 
