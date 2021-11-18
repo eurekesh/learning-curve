@@ -88,14 +88,15 @@ export class DialogComponent {
         take(1),
         tap(state => {
           if (state === ConnectionState.ConnectionFailed) {
-            this._snackbar.open('Room Id could not be found, please try again', 'Okay', {
+            this._snackbar.open('Room id could not be found, please try again', 'Okay', {
               duration: 3000
             })
           }
           else if (state === ConnectionState.Connected) {
+            this._dialogRef.close();
             this._route.navigate(['/playground']);
             console.log('join successful');
-            this._dialogRef.close();
+
           }
         })
       )

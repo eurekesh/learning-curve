@@ -3,7 +3,7 @@ import {MatSliderChange} from "@angular/material/slider";
 import {BehaviorSubject} from 'rxjs';
 import {ICard} from "../shared/interfaces/card";
 import {RoomServiceService} from "../shared/services/room-service.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)
 // https://www.tektutorialshub.com/angular/create-observable-from-event-using-fromevent-in-angular/ <-- for making DOM element observable
 
@@ -33,11 +33,27 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
-
-
   addCard(card: ICard){
     console.log("In playground.addcard")
     this.localCards.push(card)
+  }
+
+  openChangeQuestionDialog() {
+    const dialogConfig = new MatDialogConfig();
+    this.dialog.open(ChangeQuestionDialog, dialogConfig);
+  }
+}
+
+@Component({
+  selector: 'app-change-question-dialog',
+  templateUrl: './change-question-dialog.component.html'
+})
+export class ChangeQuestionDialog {
+  constructor(readonly rs: RoomServiceService) {
+  }
+
+  sendQuestion(newQuestion: string) {
+    this.rs.sendQuestionChange(newQuestion);
   }
 }
 

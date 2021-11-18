@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Socket} from "ngx-socket-io";
-import {BehaviorSubject, debounceTime, Observable, take, tap} from "rxjs";
+import {BehaviorSubject, debounceTime, Observable, skipWhile, take, tap} from "rxjs";
 import {ICard} from "../interfaces/card";
 import {IRoomJoinState} from "../interfaces/room-join-state";
 import {ConnectionState} from "../enums/connection-state";
@@ -10,12 +10,15 @@ import {ConnectionState} from "../enums/connection-state";
 })
 export class RoomServiceService {
   private connectedToRoom$ = new BehaviorSubject<number>(ConnectionState.Disconnected);
+  private roomSliderAverage$ = new BehaviorSubject<number>(0);
+
+  public roomSliderObs$ = this.roomSliderAverage$.asObservable();
   public connectionState$ = this.connectedToRoom$.asObservable();
   roomState = new BehaviorSubject<IRoomJoinState>({roomId: '-2', isHost: false });
 
   constructor(readonly socket: Socket) {
     this.sendConnectionConfirmation();
-    this.outputTest();
+    this.listenForQuestionChange();
   }
 
   sendConnectionConfirmation() {
@@ -23,9 +26,9 @@ export class RoomServiceService {
     console.log('sent confirmation')
   }
 
-  outputTest() {
-    this.socket.fromEvent('confirm')
-      .pipe(tap(data => console.log(data)))
+  listenForSliderUpdates() {
+    this.socket.fromEvent('room:patch:slider:server_directive')
+      .pipe(tap(data => this.roomSliderAverage$.next(data as number)))
       .subscribe();
   }
 
@@ -38,6 +41,23 @@ export class RoomServiceService {
   joinRoom(roomId: string) {
     console.log('join request to room id ' + roomId + ' dispatched')
     this.socket.emit('room:join:client_request', roomId);
+  }
+
+  sendQuestionChange(newQuestion: string) {
+    this.socket.emit('room:update:question', newQuestion);
+  }
+
+  listenForQuestionChange() {
+    this.socket.fromEvent('room:update:question:server_directive')
+      .pipe(
+        tap(question => {
+          console.log('new question received');
+          const currRoomState = this.roomState.value;
+          currRoomState.activeQuestion = question as string;
+          this.roomState.next(currRoomState);
+        })
+      )
+      .subscribe();
   }
 
   // this will update room connection state if proper join packet is received
@@ -53,6 +73,9 @@ export class RoomServiceService {
             this.connectedToRoom$.next(ConnectionState.ConnectionFailed);
           } else {
             this.connectedToRoom$.next(ConnectionState.Connected);
+            if(packet.isHost) {
+              this.listenForSliderUpdates();
+            }
             this.roomState.next(packet);
           }
         })
@@ -62,10 +85,10 @@ export class RoomServiceService {
 
   getCards(): ICard[] {
     const c: ICard = {
-      title: "dummy thicc ",
-      subTitle: "dummy sub title",
+      title: "ex",
+      subTitle: "ex ex",
       cardType: 'Question',
-      content: "dummy"
+      content: "dummy q"
     }
     return [c,c,c,c,c,c];
   }
@@ -74,8 +97,9 @@ export class RoomServiceService {
     inputObs$
       .pipe(
         debounceTime(500),
+        skipWhile(_ => this.roomState.value.isHost === true),
         tap(x => {
-          this.socket.emit('slider update', x);
+          this.socket.emit('room:join:update_slider_data', x);
           console.log(x);
         })
       )

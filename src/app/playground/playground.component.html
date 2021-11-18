@@ -1,11 +1,29 @@
-<!--<span *ngFor="let c of localCards">{{c.title}}</span>-->
 <div class="container">
   <div class="row justify-content-center">
     <div class="w-50">
-      <mat-card class="example-card floating-card" style="text-align: center;">
-        <mat-card-title>How well do you get this?</mat-card-title>
-        <mat-slider (change)="sliderChange($event)" aria-label="unit(s)" ></mat-slider>
-      </mat-card>
+      <ng-container *ngIf="!(rs.roomState | async)?.isHost; else hostSliderCard">
+        <mat-card class="floating-card" style="text-align: center;">
+          <mat-card-title>{{(rs.roomState | async)?.activeQuestion}}</mat-card-title>
+          <mat-card-content>
+            <mat-slider (change)="sliderChange($event)" aria-label="unit(s)" class="w-75"></mat-slider>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
     </div>
   </div>
 </div>
+
+<ng-template #hostSliderCard>
+  <mat-card class="floating-card text-center">
+    <mat-card-header class="text-center">
+      <span class="flex-fill"></span>
+      <button mat-icon-button (click)="openChangeQuestionDialog()" aria-label="button that will change the question title">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-title style="text-align:center;">{{(rs.roomState | async)?.activeQuestion}}</mat-card-title>
+    <mat-card-content>
+      <mat-slider disabled="true" [value]="(rs.roomSliderObs$ | async)" aria-label="unit(s)" class="w-75"></mat-slider>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

@@ -6,6 +6,7 @@ import * as compression from 'compression';
 import {Server} from "socket.io";
 import {Sockets} from "./sockets/sockets";
 
+// drew inspiration from https://blexin.com/en/blog-en/angular-nodejs-and-typescript-together/ for initial scaffolding on this project!
 class Application {
   public app: express.Application;
   private sockets = new Sockets();
@@ -20,6 +21,7 @@ class Application {
     return new Application;
   }
 
+  // https://jaketrent.com/post/https-redirect-node-heroku needed for heroku
   private static requireHTTPS(req: express.Request, res: express.Response, next: any) {
     if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
       return res.redirect('https://' + req.get('host') + req.url);
@@ -55,6 +57,7 @@ class Application {
     // debugging
     io.of("/").adapter.on("create-room", (room) => {  console.log(`room ${room} was created`);});
     io.of("/").adapter.on("join-room", (room, id) => {  console.log(`socket ${id} has joined room ${room}`);});
+    io.of("/").adapter.on("leave-room", (room, id) => {  console.log(`socket ${id} has joined room ${room}`);});
 
     server.listen(port, () => console.log('Server active on port ' + port));
   }

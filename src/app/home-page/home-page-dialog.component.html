@@ -5,5 +5,5 @@
   </mat-form-field>
 </form>
 <div mat-dialog-actions class="justify-content-center">
-  <button mat-raised-button (click)="requestRoomJoin()">Go!</button>
+  <button mat-raised-button (click)="requestRoomJoin()" (keyup.enter)="requestRoomJoin()">Go!</button>
 </div>
