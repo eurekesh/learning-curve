@@ -1,14 +1,24 @@
 var gulp = require('gulp'),
   ts = require('gulp-typescript'),
   spawn = require('cross-spawn'),
-  nodemon = require('gulp-nodemon');
+  nodemon = require('gulp-nodemon'),
+  clean = require('gulp-clean');
 
 var projConfig = ts.createProject('server/tsconfig.json')
+
+gulp.task('clean-prod', function () {
+  return gulp.src('dist/*', {read: false})
+    .pipe(clean());
+});
 
 gulp.task('build-backend', () => {
   return gulp.src('server/**/*.ts')
     .pipe(projConfig())
     .pipe(gulp.dest('dist/server/'))
+})
+
+gulp.task('build-prod', (gulp.series('build-backend', 'build-frontend')), done => {
+  done();
 })
 
 gulp.task('build-frontend', (cb) => {
