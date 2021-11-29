@@ -4,22 +4,20 @@ var gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   clean = require('gulp-clean');
 
-var projConfig = ts.createProject('server/tsconfig.json')
+let projConfig = ts.createProject('server/tsconfig.json');
 
-gulp.task('clean-prod', function () {
+gulp.task('clean-prod', (cb) => {
   return gulp.src('dist/*', {read: false})
     .pipe(clean());
-});
+})
 
-gulp.task('build-backend', () => {
+gulp.task('build-backend', (cb) => {
   return gulp.src('server/**/*.ts')
     .pipe(projConfig())
     .pipe(gulp.dest('dist/server/'))
 })
 
-gulp.task('build-prod', (gulp.series('build-backend', 'build-frontend')), done => {
-  done();
-})
+
 
 gulp.task('build-frontend', (cb) => {
   spawn('ng', ['build', '--output-path=dist/public', '--deleteOutputPath=false'], {stdio: 'inherit'});
@@ -36,6 +34,10 @@ gulp.task('hot-reload-server', (done) => {
     env: { 'NODE_ENV': 'development'},
     done: done
   });
+  done();
+})
+
+gulp.task('build-prod', (gulp.series('build-backend', 'build-frontend')), done => {
   done();
 })
 
