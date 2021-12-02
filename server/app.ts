@@ -30,13 +30,15 @@ class Application {
   }
 
   private loadConfiguration(): void {
+    // compression must happen at highest level
+    this.app.use(compression());
+
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({extended: false}));
 
     this.app.use(express.static(path.join(__dirname, '../public')));
 
     this.app.use(Application.requireHTTPS);
-    this.app.use(compression());
 
     const port = process.env.PORT || '3030'
     this.app.set('port', port);
