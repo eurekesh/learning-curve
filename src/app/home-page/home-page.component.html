@@ -1,24 +1,33 @@
 <div class="container">
-  <div class="row justify-content-center">
-    <!--  <div class="col-md-4 w-25">-->
-    <div class="w-25">
-      <mat-card class="example-card floating-card" style="text-align: center;">
-        <mat-card-title>Create a room</mat-card-title>
-        <mat-card-actions>
-          <button (click)="requestRoomCreation()" mat-raised-button>Create!</button>
-        </mat-card-actions>
-      </mat-card>
+  <div>
+    <div class="row justify-content-center">
+      <div class="w-75">
+        <img src="assets/learning_curve.svg" alt="logo">
+      </div>
+
     </div>
-    <!--  <div class="col-md-8 w-25">-->
-    <div class="w-25">
-      <mat-card class="example-card floating-card" style="text-align: center;">
-        <mat-card-title>Join a room</mat-card-title>
-        <mat-card-actions>
-          <button (click)="openDialog()" mat-dialog-close mat-raised-button>Join!</button>
-        </mat-card-actions>
-      </mat-card>
+    <div class="row justify-content-center mt-5">
+
+      <div class="w-50">
+        <mat-card class="floating-card" style="text-align: center;">
+          <mat-card-title>Create a room</mat-card-title>
+          <mat-card-actions>
+            <button (click)="requestRoomCreation()" mat-raised-button>Create!</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div class="w-50">
+        <mat-card class="floating-card" style="text-align: center;">
+          <mat-card-title>Join a room</mat-card-title>
+          <mat-card-actions>
+            <button (click)="openDialog()" mat-dialog-close mat-raised-button>Join!</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
   </div>
+
 </div>
 
 
