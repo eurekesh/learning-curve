@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSliderChange} from "@angular/material/slider";
 import {BehaviorSubject} from 'rxjs';
-import {ICard} from "../shared/interfaces/card";
 import {RoomServiceService} from "../shared/services/room-service.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 // https://www.tektutorialshub.com/angular/elementref-in-angular/ <-- for accessing DOM (in unsafe way)

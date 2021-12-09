@@ -45,15 +45,9 @@ class Application {
 
     const server = http.createServer(this.app);
     const io = new Server(server);
-    // console.log(io);
+
     this.sockets.initialize(io);
-    // instrument(io, {
-    //   auth: {
-    //     type: 'basic',
-    //     username: 'admin',
-    //     password: process.env.SOCKETIOPW || '$2a$12$KyjK2vZcxo1tfD5NvuIA.ulU2hO.jUYMNE6/kftqyftC6/X5J3ERW'
-    //   }
-    // })
+
     io.on('connection', this.sockets.registerRoomEvents.bind(this.sockets)); // context binding, took way too long to figure this out
 
     // debugging
@@ -66,7 +60,6 @@ class Application {
 
   private loadRoutes() {
     let router = express.Router();
-    // router.get('path/to/route', class.pubMethod.bind(class.pubMethod))
     this.app.use(router);
 
     this.app.get('*', (req, res) => {

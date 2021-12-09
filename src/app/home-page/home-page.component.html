@@ -1,24 +1,24 @@
 <div class="container">
-<div class="row justify-content-center">
-<!--  <div class="col-md-4 w-25">-->
-  <div class="w-25">
-    <mat-card class="example-card floating-card" style="text-align: center;">
-      <mat-card-title>Create a room</mat-card-title>
-      <mat-card-actions>
-        <button mat-raised-button (click)="requestRoomCreation()">Create!</button>
-      </mat-card-actions>
-    </mat-card>
+  <div class="row justify-content-center">
+    <!--  <div class="col-md-4 w-25">-->
+    <div class="w-25">
+      <mat-card class="example-card floating-card" style="text-align: center;">
+        <mat-card-title>Create a room</mat-card-title>
+        <mat-card-actions>
+          <button (click)="requestRoomCreation()" mat-raised-button>Create!</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <!--  <div class="col-md-8 w-25">-->
+    <div class="w-25">
+      <mat-card class="example-card floating-card" style="text-align: center;">
+        <mat-card-title>Join a room</mat-card-title>
+        <mat-card-actions>
+          <button (click)="openDialog()" mat-dialog-close mat-raised-button>Join!</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
-<!--  <div class="col-md-8 w-25">-->
-  <div class="w-25">
-    <mat-card class="example-card floating-card" style="text-align: center;">
-      <mat-card-title>Join a room</mat-card-title>
-      <mat-card-actions>
-        <button mat-raised-button mat-dialog-close (click)="openDialog()">Join!</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
 </div>
 
 

@@ -1,11 +1,20 @@
 <h1 mat-dialog-title>Give your card a title</h1>
+
 <form class="example-form">
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field appearance="fill" class="example-full-width">
     <mat-label>Enter a title</mat-label>
-    <input matInput placeholder="Who's the best? DJ Khaled?" #title>
+    <input #title matInput placeholder="Who's the best? DJ Khaled?">
+  </mat-form-field>
+
+  <br>
+  <br>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Describe your question</mat-label>
+    <input #content matInput placeholder="I just don't know...">
   </mat-form-field>
 </form>
-<div mat-dialog-actions class="justify-content-center">
-<!--  https://angular.io/guide/inputs-outputs -->
-  <button mat-raised-button mat-dialog-close (click)="addCard(title.value)">Add!</button>
+
+<div class="justify-content-center" mat-dialog-actions>
+  <button (click)="addCard(title.value, content.value)" mat-dialog-close mat-raised-button>Add!</button>
 </div>

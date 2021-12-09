@@ -9,14 +9,13 @@ import {ConnectionState} from "../enums/connection-state";
   providedIn: 'root'
 })
 export class RoomServiceService {
+  roomState = new BehaviorSubject<IRoomJoinState>({roomId: '-2', isHost: false});
   private connectedToRoom$ = new BehaviorSubject<number>(ConnectionState.Disconnected);
-  private roomSliderAverage$ = new BehaviorSubject<number>(0);
-  private newCards$ = new BehaviorSubject<ICard[]>([]);
-
-  public newCardsObs$ = this.newCards$.asObservable();
-  public roomSliderObs$ = this.roomSliderAverage$.asObservable();
   public connectionState$ = this.connectedToRoom$.asObservable();
-  roomState = new BehaviorSubject<IRoomJoinState>({roomId: '-2', isHost: false });
+  private roomSliderAverage$ = new BehaviorSubject<number>(0);
+  public roomSliderObs$ = this.roomSliderAverage$.asObservable();
+  private newCards$ = new BehaviorSubject<ICard[]>([]);
+  public newCardsObs$ = this.newCards$.asObservable();
 
   constructor(readonly socket: Socket) {
     this.sendConnectionConfirmation();
@@ -77,7 +76,7 @@ export class RoomServiceService {
             this.connectedToRoom$.next(ConnectionState.ConnectionFailed);
           } else {
             this.connectedToRoom$.next(ConnectionState.Connected);
-            if(packet.isHost) {
+            if (packet.isHost) {
               this.listenForSliderUpdates();
             }
             this.roomState.next(packet);
@@ -87,11 +86,11 @@ export class RoomServiceService {
       .subscribe();
   }
 
-  sendNewCard(c: ICard){
+  sendNewCard(c: ICard) {
     this.socket.emit('room:update:newCard', c);
   }
 
-  listenForNewCard(){
+  listenForNewCard() {
     this.socket.fromEvent('room:update:newCard:server_directive')
       .pipe(
         //take(1),
@@ -115,7 +114,6 @@ export class RoomServiceService {
   // }
 
 
-
   setSliderObservable(inputObs$: Observable<number>): void {
     inputObs$
       .pipe(
@@ -134,6 +132,6 @@ export class RoomServiceService {
   }
 
   resetRoomState() {
-    this.roomState.next({roomId: '-2', isHost: false });
+    this.roomState.next({roomId: '-2', isHost: false});
   }
 }

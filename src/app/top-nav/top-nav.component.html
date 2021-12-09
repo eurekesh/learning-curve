@@ -1,12 +1,13 @@
 <p>
   <mat-toolbar>
-    <button mat-icon-button aria-label="Menu icon" routerLink="/" (click)="rs.resetRoomState()">
+    <button (click)="rs.resetRoomState()" aria-label="Menu icon" mat-icon-button routerLink="/">
       <mat-icon>home</mat-icon>
     </button>
     <ng-container *ngIf="(rs.roomState | async)?.roomId !== '-2'">
-      <span>You {{(rs.roomState | async)?.isHost ? 'are' : 'are not'}} the host in room {{(rs.roomState | async)?.roomId}}</span>
+      <span>You {{(rs.roomState | async)?.isHost ? 'are' : 'are not'}}
+        the host in room {{(rs.roomState | async)?.roomId}}</span>
       <span class="flex-fill"></span>
-      <button style="font-size : 30px" mat-mini-fab (click)="openAddCardDialog()">+</button>
+      <button (click)="openAddCardDialog()" mat-mini-fab style="font-size : 30px">+</button>
     </ng-container>
 
   </mat-toolbar>

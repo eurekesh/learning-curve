@@ -22,4 +22,5 @@ import {PlaygroundModule} from "../playground/playground.module";
     PlaygroundModule
   ]
 })
-export class LayoutModule { }
+export class LayoutModule {
+}

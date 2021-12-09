@@ -1,21 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {RoomServiceService} from "../shared/services/room-service.service";
 import {ICard} from "../shared/interfaces/card";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-top-nav',
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss']
 })
-export class TopNavComponent implements OnInit {
+export class TopNavComponent {
 
   constructor(readonly rs: RoomServiceService,
               readonly dialog: MatDialog) {
 
-  }
-
-  ngOnInit(): void {
   }
 
   openAddCardDialog() {
@@ -26,26 +24,28 @@ export class TopNavComponent implements OnInit {
 }
 
 @Component({
-  selector: 'add-card-dialog',
   templateUrl: './add-card-dialog.html',
 })
 export class AddCardDialogComponent {
-  //constructor(public playground: PlaygroundComponent) {} // has nullinjector error
-  constructor(readonly roomService: RoomServiceService) {}
+  constructor(readonly roomService: RoomServiceService,
+              readonly _snackbar: MatSnackBar) {
+  }
 
-  //https://angular.io/guide/inputs-outputs
-  @Output() newCardTitleEvent = new EventEmitter<string>();
-
-  addCard(inputTitle: string){
+  addCard(inputTitle: string, inputContent: string) {
+    if (inputTitle.length === 0 || inputContent.length === 0) {
+      this._snackbar.open('You cannot enter a malformed question!', 'Okay', {
+        duration: 3000
+      })
+      return;
+    }
 
     let c: ICard = {
       title: inputTitle,
-      content: ''
+      content: inputContent
     };
 
     this.roomService.sendNewCard(c)
 
-    //this.playground.addCard(c);
     console.log(inputTitle)
   }
 }

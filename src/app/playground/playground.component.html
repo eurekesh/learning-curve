@@ -11,25 +11,32 @@
       </ng-container>
     </div>
   </div>
-  <div class="row justify-content-evenly">
-    <mat-card *ngFor="let card of rs.newCardsObs$ | async">
-      <mat-card-title>{{card.title}}</mat-card-title>
-      <mat-card-content>{{card.content}}</mat-card-content>
-    </mat-card>
+  <div class="content">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div *ngFor="let card of rs.newCardsObs$ | async" fxFlex="33%">
+        <mat-card>
+          <mat-card-title>{{card.title}}</mat-card-title>
+          <mat-card-content>{{card.content}}</mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
   </div>
+
 </div>
 
 <ng-template #hostSliderCard>
   <mat-card class="floating-card text-center">
     <mat-card-header class="text-center">
       <span class="flex-fill"></span>
-      <button mat-icon-button (click)="openChangeQuestionDialog()" aria-label="button that will change the question title">
+      <button (click)="openChangeQuestionDialog()" aria-label="button that will change the question title"
+              mat-icon-button>
         <mat-icon>settings</mat-icon>
       </button>
     </mat-card-header>
     <mat-card-title style="text-align:center;">{{(rs.roomState | async)?.activeQuestion}}</mat-card-title>
     <mat-card-content>
-      <mat-slider disabled="true" [value]="(rs.roomSliderObs$ | async)" aria-label="unit(s)" class="w-75"></mat-slider>
+      <mat-slider [value]="(rs.roomSliderObs$ | async)" aria-label="unit(s)" class="w-75" disabled="true"></mat-slider>
     </mat-card-content>
   </mat-card>
 </ng-template>

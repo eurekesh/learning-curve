@@ -29,4 +29,5 @@ import {MatInputModule} from "@angular/material/input";
     MatInputModule
   ]
 })
-export class TopNavModule { }
+export class TopNavModule {
+}

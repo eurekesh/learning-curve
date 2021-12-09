@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>Send a new question to students</h1>
 <mat-dialog-content>
-<form>
-  <mat-form-field appearance="fill">
-    <mat-label>Enter a question</mat-label>
-    <input matInput placeholder="Who likes derivatives?" #title>
-  </mat-form-field>
-</form>
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a question</mat-label>
+      <input #title matInput placeholder="Who likes derivatives?">
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
-<div mat-dialog-actions class="justify-content-right">
+<div class="justify-content-right" mat-dialog-actions>
   <!--  https://angular.io/guide/inputs-outputs -->
-  <button mat-raised-button mat-dialog-close (click)="sendQuestion(title.value)">Add!</button>
+  <button (click)="sendQuestion(title.value)" mat-dialog-close mat-raised-button>Add!</button>
 </div>

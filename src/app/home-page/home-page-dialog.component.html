@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Enter a room code:</h1>
 <form class="example-form">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <input matInput placeholder="Ex. 123456" [(ngModel)]="inputRoomId">
+  <mat-form-field appearance="fill" class="example-full-width">
+    <input [(ngModel)]="inputRoomId" matInput placeholder="Ex. 123456">
   </mat-form-field>
 </form>
-<div mat-dialog-actions class="justify-content-center">
-  <button mat-raised-button (click)="requestRoomJoin()" (keyup.enter)="requestRoomJoin()">Go!</button>
+<div class="justify-content-center" mat-dialog-actions>
+  <button (click)="requestRoomJoin()" (keyup.enter)="requestRoomJoin()" mat-raised-button>Go!</button>
 </div>

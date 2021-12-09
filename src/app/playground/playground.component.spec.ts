@@ -8,9 +8,9 @@ describe('PlaygroundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlaygroundComponent ]
+      declarations: [PlaygroundComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

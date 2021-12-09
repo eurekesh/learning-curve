@@ -7,24 +7,27 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
     PlaygroundComponent,
     ChangeQuestionDialog
   ],
-    imports: [
-        CommonModule,
-        MatSliderModule,
-        MatCardModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatInputModule,
-        MatIconModule,
-        MatDialogModule
-    ],
+  imports: [
+    CommonModule,
+    MatSliderModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatIconModule,
+    MatDialogModule,
+    FlexLayoutModule
+  ],
   exports: [
     PlaygroundComponent
   ]
 })
-export class PlaygroundModule { }
+export class PlaygroundModule {
+}

@@ -17,8 +17,7 @@ export class HomePageComponent implements OnInit {
   constructor(public dialog: MatDialog,
               readonly rs: RoomServiceService,
               private _snackbar: MatSnackBar,
-              private _route: Router)
-  {
+              private _route: Router) {
     this.roomConnectionState$ = this.rs.connectionState$;
   }
 
@@ -44,8 +43,7 @@ export class HomePageComponent implements OnInit {
             this._snackbar.open('Room could not be created, please try again', 'Okay', {
               duration: 3000
             })
-          }
-          else if (state === ConnectionState.Connected) {
+          } else if (state === ConnectionState.Connected) {
             this._route.navigate(['/playground']);
             console.log('join successful');
           }
@@ -61,8 +59,9 @@ export class HomePageComponent implements OnInit {
   templateUrl: './home-page-dialog.component.html',
 })
 export class DialogComponent {
-  private readonly roomConnectionState$;
   inputRoomId = '';
+  private readonly roomConnectionState$;
+
   constructor(readonly rs: RoomServiceService,
               private readonly _route: Router,
               private readonly _snackbar: MatSnackBar,
@@ -91,8 +90,7 @@ export class DialogComponent {
             this._snackbar.open('Room id could not be found, please try again', 'Okay', {
               duration: 3000
             })
-          }
-          else if (state === ConnectionState.Connected) {
+          } else if (state === ConnectionState.Connected) {
             this._dialogRef.close();
             this._route.navigate(['/playground']);
             console.log('join successful');
