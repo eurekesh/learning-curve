@@ -13,13 +13,13 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-  localCards: ICard[];
+  //localCards: ICard[];
 
   private slideSubject = new BehaviorSubject(0);
   readonly slideValue$ = this.slideSubject.asObservable();
 
   constructor(readonly rs: RoomServiceService, public dialog: MatDialog) {
-    this.localCards = rs.getCards();
+    //this.localCards = rs.getCards();
   }
 
   ngOnInit(): void {
@@ -33,10 +33,10 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
-  addCard(card: ICard){
-    console.log("In playground.addcard")
-    this.localCards.push(card)
-  }
+  // addCard(card: ICard){
+  //   console.log("In playground.addcard")
+  //   this.localCards.push(card)
+  // }
 
   openChangeQuestionDialog() {
     const dialogConfig = new MatDialogConfig();

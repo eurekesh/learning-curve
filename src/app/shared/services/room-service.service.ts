@@ -11,7 +11,9 @@ import {ConnectionState} from "../enums/connection-state";
 export class RoomServiceService {
   private connectedToRoom$ = new BehaviorSubject<number>(ConnectionState.Disconnected);
   private roomSliderAverage$ = new BehaviorSubject<number>(0);
+  private newCards$ = new BehaviorSubject<ICard[]>([]);
 
+  public newCardsObs$ = this.newCards$.asObservable();
   public roomSliderObs$ = this.roomSliderAverage$.asObservable();
   public connectionState$ = this.connectedToRoom$.asObservable();
   roomState = new BehaviorSubject<IRoomJoinState>({roomId: '-2', isHost: false });
@@ -19,6 +21,8 @@ export class RoomServiceService {
   constructor(readonly socket: Socket) {
     this.sendConnectionConfirmation();
     this.listenForQuestionChange();
+    this.listenForNewCard()
+
   }
 
   sendConnectionConfirmation() {
@@ -83,15 +87,34 @@ export class RoomServiceService {
       .subscribe();
   }
 
-  getCards(): ICard[] {
-    const c: ICard = {
-      title: "ex",
-      subTitle: "ex ex",
-      cardType: 'Question',
-      content: "dummy q"
-    }
-    return [c,c,c,c,c,c];
+  sendNewCard(c: ICard){
+    this.socket.emit('room:update:newCard', c);
   }
+
+  listenForNewCard(){
+    this.socket.fromEvent('room:update:newCard:server_directive')
+      .pipe(
+        //take(1),
+        tap(newCardPacket => {
+          const newCard = newCardPacket as ICard;
+          const newCardsCopy = this.newCards$.getValue()
+          newCardsCopy.push(newCard)
+          this.newCards$.next(newCardsCopy)
+        })
+      ).subscribe()
+  }
+
+  // getCards(): ICard[] {
+  //   const c: ICard = {
+  //     title: "ex",
+  //     subTitle: "ex ex",
+  //     cardType: 'Question',
+  //     content: "dummy q"
+  //   }
+  //   return [c,c,c,c,c,c];
+  // }
+
+
 
   setSliderObservable(inputObs$: Observable<number>): void {
     inputObs$

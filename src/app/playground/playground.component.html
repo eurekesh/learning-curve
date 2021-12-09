@@ -11,6 +11,12 @@
       </ng-container>
     </div>
   </div>
+  <div class="row justify-content-evenly">
+    <mat-card *ngFor="let card of rs.newCardsObs$ | async">
+      <mat-card-title>{{card.title}}</mat-card-title>
+      <mat-card-content>{{card.content}}</mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
 <ng-template #hostSliderCard>

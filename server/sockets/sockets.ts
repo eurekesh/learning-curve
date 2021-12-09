@@ -3,6 +3,7 @@ import {DefaultEventsMap} from "socket.io/dist/typed-events";
 import {IRoomJoin} from "../interfaces/room-join";
 import {generateRoomCode} from "./utils";
 import {IRoomState} from "../interfaces/room-state";
+import {ICard} from "../interfaces/card";
 
 export class Sockets {
   private initialized: boolean;
@@ -110,6 +111,13 @@ export class Sockets {
 
         socket.to(userRoom).emit('room:update:question:server_directive', newQuestion);
       }
+    })
+
+    socket.on('room:update:newCard', (newCard: ICard) => {
+      const userRoom = Sockets.getUserRoom(socket);
+
+      //TODO Have the card be added to room state and then sent to clients, instead of sending directly to clients
+      socket.to(userRoom).emit('room:update:newCard:server_directive', newCard);
     })
   }
 

@@ -31,18 +31,19 @@ export class TopNavComponent implements OnInit {
 })
 export class AddCardDialogComponent {
   //constructor(public playground: PlaygroundComponent) {} // has nullinjector error
-  constructor() {}
+  constructor(readonly roomService: RoomServiceService) {}
 
   //https://angular.io/guide/inputs-outputs
   @Output() newCardTitleEvent = new EventEmitter<string>();
 
   addCard(inputTitle: string){
+
     let c: ICard = {
       title: inputTitle,
-      subTitle: '',
-      cardType: 'Question',
       content: ''
     };
+
+    this.roomService.sendNewCard(c)
 
     //this.playground.addCard(c);
     console.log(inputTitle)
