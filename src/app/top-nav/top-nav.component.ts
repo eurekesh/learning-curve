@@ -4,6 +4,7 @@ import {ICard} from "../shared/interfaces/card";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
+// components are the controllers behind the views (html) and present data sent by or maintained by the application (model), MVC pattern
 @Component({
   selector: 'app-top-nav',
   templateUrl: './top-nav.component.html',
@@ -16,6 +17,7 @@ export class TopNavComponent {
 
   }
 
+  // FAB hit! Time to add a question
   openAddCardDialog() {
     const dialogConfig = new MatDialogConfig();
     this.dialog.open(AddCardDialogComponent, dialogConfig);

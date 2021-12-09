@@ -12,15 +12,14 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-  //localCards: ICard[];
-
   private slideSubject = new BehaviorSubject(0);
   readonly slideValue$ = this.slideSubject.asObservable();
 
   constructor(readonly rs: RoomServiceService, public dialog: MatDialog) {
-    //this.localCards = rs.getCards();
+
   }
 
+  // send slider observable to room service!
   ngOnInit(): void {
     this.rs.setSliderObservable(this.slideValue$);
   }
@@ -31,11 +30,6 @@ export class PlaygroundComponent implements OnInit {
       this.slideSubject.next(event.value);
     }
   }
-
-  // addCard(card: ICard){
-  //   console.log("In playground.addcard")
-  //   this.localCards.push(card)
-  // }
 
   openChangeQuestionDialog() {
     const dialogConfig = new MatDialogConfig();

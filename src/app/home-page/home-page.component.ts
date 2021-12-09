@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {RoomServiceService} from "../shared/services/room-service.service";
 import {filter, take, tap} from "rxjs";
@@ -11,17 +11,14 @@ import {Router} from "@angular/router";
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent  {
   private readonly roomConnectionState$;
 
   constructor(public dialog: MatDialog,
               readonly rs: RoomServiceService,
               private _snackbar: MatSnackBar,
               private _route: Router) {
-    this.roomConnectionState$ = this.rs.connectionState$;
-  }
-
-  ngOnInit(): void {
+    this.roomConnectionState$ = this.rs.connectionState$; // keep local copy of connection state
   }
 
   openDialog() {
@@ -30,9 +27,11 @@ export class HomePageComponent implements OnInit {
   }
 
   requestRoomCreation() {
+    // if currently in a room, reset currently set subjects
     this.rs.resetConnectionState();
     this.rs.createRoom();
     this.rs.listenForRoomJoin();
+
     this.roomConnectionState$
       .pipe(
         filter(state => state !== ConnectionState.Disconnected),
@@ -77,6 +76,7 @@ export class DialogComponent {
       })
       return;
     }
+
     this.rs.resetConnectionState();
     this.rs.listenForRoomJoin();
     this.rs.joinRoom(this.inputRoomId);

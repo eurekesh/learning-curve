@@ -5,23 +5,27 @@ import {ICard} from "../interfaces/card";
 import {IRoomJoinState} from "../interfaces/room-join-state";
 import {ConnectionState} from "../enums/connection-state";
 
+// because Angular services are only initialized once during application lifetime, it is a prime example of the singleton pattern
 @Injectable({
   providedIn: 'root'
 })
 export class RoomServiceService {
   roomState = new BehaviorSubject<IRoomJoinState>({roomId: '-2', isHost: false});
-  private connectedToRoom$ = new BehaviorSubject<number>(ConnectionState.Disconnected);
-  public connectionState$ = this.connectedToRoom$.asObservable();
-  private roomSliderAverage$ = new BehaviorSubject<number>(0);
-  public roomSliderObs$ = this.roomSliderAverage$.asObservable();
+
   private newCards$ = new BehaviorSubject<ICard[]>([]);
+  private connectedToRoom$ = new BehaviorSubject<number>(ConnectionState.Disconnected);
+  private roomSliderAverage$ = new BehaviorSubject<number>(0);
+
+  // observer pattern, subscriptions occur in many components
+  public connectionState$ = this.connectedToRoom$.asObservable();
+  public roomSliderObs$ = this.roomSliderAverage$.asObservable();
   public newCardsObs$ = this.newCards$.asObservable();
 
   constructor(readonly socket: Socket) {
+    // subscribe to server events
     this.sendConnectionConfirmation();
     this.listenForQuestionChange();
     this.listenForNewCard()
-
   }
 
   sendConnectionConfirmation() {
@@ -103,17 +107,6 @@ export class RoomServiceService {
       ).subscribe()
   }
 
-  // getCards(): ICard[] {
-  //   const c: ICard = {
-  //     title: "ex",
-  //     subTitle: "ex ex",
-  //     cardType: 'Question',
-  //     content: "dummy q"
-  //   }
-  //   return [c,c,c,c,c,c];
-  // }
-
-
   setSliderObservable(inputObs$: Observable<number>): void {
     inputObs$
       .pipe(
@@ -133,5 +126,6 @@ export class RoomServiceService {
 
   resetRoomState() {
     this.roomState.next({roomId: '-2', isHost: false});
+    this.newCards$.next([]);
   }
 }

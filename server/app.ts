@@ -17,7 +17,7 @@ class Application {
     this.loadRoutes();
   }
 
-  public static run(): Application {
+  public static run(): Application { // singleton pattern
     return new Application;
   }
 

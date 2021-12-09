@@ -8,9 +8,7 @@ import {ICard} from "../interfaces/card";
 export class Sockets {
   private initialized: boolean;
   private io?: Server;
-  // for now, a rudimentary room check will be performed on a string array
   private createdRoomIds = new Map<string, IRoomState>();
-
   private readonly badPacket: IRoomJoin = { roomId: '-1', isHost: false }
 
   constructor() {
@@ -22,6 +20,7 @@ export class Sockets {
     this.initialized = true;
   }
 
+  // contains all callbacks for room events
   public registerRoomEvents(socket: any): void {
     socket.on('connected', () => {
       socket.emit('confirm', 'hello client' + socket.id);
@@ -56,12 +55,11 @@ export class Sockets {
       socket.emit('room:join:server_directive', joinPacket);
     });
 
-
     socket.on('room:join:client_request', (roomId: string) => {
-      socket.leaveAll();
+      socket.leaveAll(); // clients can only be a member of one room
       console.log(`join:client_request: requested received for room ${roomId}`);
 
-      if (this.createdRoomIds.has(roomId))
+      if (this.createdRoomIds.has(roomId)) // let's make sure the room exists
       {
         const joinPacket: IRoomJoin = {
           roomId: roomId,
@@ -85,16 +83,18 @@ export class Sockets {
       console.log(socket.id + ' is disconnecting');
       const clientRoomId = [...socket.rooms][0];
       console.log([...socket.rooms])
+
       if(this.createdRoomIds.has(clientRoomId)) {
         console.log('number of clients in room before leaving is ' + this.createdRoomIds.get(clientRoomId)!.guestIds.size);
         this.createdRoomIds.get(clientRoomId)!.guestIds.delete(socket.id);
         console.log('number of clients in room after leaving is ' + this.createdRoomIds.get(clientRoomId)!.guestIds.size);
-        this.calculateRoomAverage(clientRoomId);
+        this.calculateRoomAverage(clientRoomId); // recalculate average of the clients in the room after the client left!
       }
     });
 
     socket.on('room:join:update_slider_data', (clientSliderVal: number) => {
       const clientRoom = [...socket.rooms][0];
+
       if(this.createdRoomIds.has(clientRoom)) {
         this.createdRoomIds.get(clientRoom)!.guestIds.set(socket.id, clientSliderVal);
         this.calculateRoomAverage(clientRoom);
@@ -104,7 +104,8 @@ export class Sockets {
     socket.on('room:update:question', (newQuestion: string) => {
       const userRoom = Sockets.getUserRoom(socket);
       console.log('new question change requested')
-      if(this.createdRoomIds.has(userRoom) && this.createdRoomIds.get(userRoom)!.hostId === socket.id) { // sanity check
+
+      if(this.createdRoomIds.has(userRoom) && this.createdRoomIds.get(userRoom)!.hostId === socket.id) { // sanity check, make sure user is host
         console.log('we got here')
         const oldRoom = this.createdRoomIds.get(userRoom);
         oldRoom!.activeQuestion = newQuestion; // keep track of room state on this side
@@ -126,7 +127,7 @@ export class Sockets {
   }
 
   private calculateRoomAverage(roomId: string): void {
-    // if no body is left in the room, let the host know
+    // if nobody is left in the room, let the host know
     if (this.createdRoomIds.get(roomId)!.guestIds.size === 0) {
       this.io!.in(roomId).emit('room:patch:slider:server_directive', 0);
       return;
